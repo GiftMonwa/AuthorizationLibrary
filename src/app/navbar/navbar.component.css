@@ -1,0 +1,24 @@
+.spacer {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto;
+}
+
+mat-toolbar {
+  background-color: #174372;
+}
+
+.row2 {
+  background-color: #385675;
+}
+
+mat-card {
+  width: 20%;
+  height: 25%;
+}
+
+img {
+  height: 40%;
+  width: 40%;
+}
+/*# sourceMappingURL=navbar.component.css.map */
