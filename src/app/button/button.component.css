@@ -1,0 +1,41 @@
+button {
+    color: #9C9C9C;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: bold;
+    background-color: #fff;
+    border-width: medium;
+    border-color: #fff;
+    margin-top: 2em;
+    margin-left: 5em;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+button:hover {
+    color: #707070;
+    font-weight: bold;
+    border-width: medium;
+    border-color: #747474;
+    background-color: #ECECEC;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+button:active {
+    background-color: #747474 !important;
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+
+button:focus {
+    background-color: #747474 !important;
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: #747474;
+}
+
+button::disabled {
+    background-color: #F9F9F9;
+    color: #A7A7A7;
+}
