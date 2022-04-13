@@ -1,6 +1,6 @@
 {
   "User":{
-  "userType":"unknown",
-  "isUserPermitted" :"false"
+  "userRole":"student",
+  "isUserPermitted" :{"Edit":"false","Access":"false","Delete":"false"}
   }
 }

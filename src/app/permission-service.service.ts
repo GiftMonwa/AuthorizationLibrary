@@ -1,23 +1,74 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PermissionServiceService {
-
-  constructor(private httpClient:HttpClient) { }
-  getViewPermission()
+export class PermissionServiceService implements OnInit {
+  perm:any;
+  constructor(private httpClient:HttpClient) {
+    this.httpClient.get("http://localhost:3000/User").subscribe(data=>{   //Subscribing to the observable that is returned by http client
+      this.perm=data;
+    });
+   }
+  ngOnInit():void
   {
-    //cont View=
-    return this.httpClient.get("http://localhost:3000/User");
+    this.perm=this.getPermission();
+    console.log("WE GOT HERE");
   }
 
-  getEditPermission()
+  checkPermission(permission:string):boolean
   {
+    if(this.perm.userRole==="unknown")
+    {
+      console.log("You are an Uknown User");
+      //this.displayError();
+      //Display the PopUp message
+      return false;
+    }
+    else
+    {
+      if(permission=="edit")
+      {
+        //Take User to the student Profile
+        if(this.perm.isUserPermitted.Edit==="true")
+        {
+          return true;
+        }
+      }
+      else if(permission=="Access")
+      {
+        if(this.perm.isUserPermitted.Access==="true")
+        {
+          return true;
+        }
+      }
+      else if(permission=="Delete")
+      {
+        if(this.perm.isUserPermitted.Delete==="true")
+        {
+          return true;
+        }
+      }
+      else
+      {
+        console.log("You have no permissions here");
+        return false;
+      }
+    }
+    return false;
   }
 
-  getDeletePermission()
+  getRole():string
   {
+    return this.perm.userRole;
   }
+
+
+  getPermission()
+  {
+    return this.httpClient.get("http://localhost:3000/User")
+  }
+
+
 }
