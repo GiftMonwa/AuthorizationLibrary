@@ -1,74 +1,57 @@
 import { Injectable, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { MatDialog } from '@angular/material/dialog';
+import { DeletePopupComponent } from './delete-popup/delete-popup.component';
+import { ViewPopupComponent } from './view-popup/view-popup.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PermissionServiceService implements OnInit {
   perm:any;
-  constructor(private httpClient:HttpClient) {
-    this.httpClient.get("http://localhost:3000/User").subscribe(data=>{   //Subscribing to the observable that is returned by http client
+  id="4577";     //The cookie value
+  constructor(public dialog: MatDialog,private httpClient:HttpClient) {
+    this.httpClient.post("http://localhost:3333/graphql",{query:'query { authorization(id:'+JSON.stringify(this.id)+') { companyId, userRole } }'})
+    .subscribe(data=>{
+      //alert(JSON.stringify(data));
       this.perm=data;
     });
-   }
+  }
+
   ngOnInit():void
   {
-    this.perm=this.getPermission();
+    //this.perm=this.getPermission();
     console.log("WE GOT HERE");
   }
 
-  checkPermission(permission:string):boolean
+  /*display():void
   {
-    if(this.perm.userRole==="unknown")
-    {
-      console.log("You are an Uknown User");
-      //this.displayError();
-      //Display the PopUp message
-      return false;
-    }
-    else
-    {
-      if(permission=="edit")
-      {
-        //Take User to the student Profile
-        if(this.perm.isUserPermitted.Edit==="true")
-        {
-          return true;
-        }
-      }
-      else if(permission=="Access")
-      {
-        if(this.perm.isUserPermitted.Access==="true")
-        {
-          return true;
-        }
-      }
-      else if(permission=="Delete")
-      {
-        if(this.perm.isUserPermitted.Delete==="true")
-        {
-          return true;
-        }
-      }
-      else
-      {
-        console.log("You have no permissions here");
-        return false;
-      }
-    }
-    return false;
-  }
+    console.log(this.perm.data.authorization.userRole);
+  }*/
 
   getRole():string
   {
-    return this.perm.userRole;
+    return this.perm.data.authorization.userRole;
   }
 
+  viewError()   //The error popUp
+  {
+    this.dialog.open(ViewPopupComponent);
+  }
+
+  deleteError()
+  {
+    this.dialog.open(DeletePopupComponent);
+  }
+
+  getCompanyId():string
+  {
+    return this.perm.data.authorization.companyId;
+  }
 
   getPermission()
   {
     return this.httpClient.get("http://localhost:3000/User")
   }
-
 
 }

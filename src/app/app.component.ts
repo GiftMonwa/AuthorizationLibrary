@@ -13,37 +13,14 @@ export class AppComponent {
   title = 'Graduates';
   constructor(public dialog: MatDialog,private serve:PermissionServiceService){}
 
-  checkAccess()
-  {
-    if(this.serve.checkPermission("Access"))
-    {
-      //User has access
-
-    }
-    else{
-      this.viewPopup();
-    }
-  }
-
-  checkDelete()
-  {
-    if(this.serve.checkPermission("Delete"))
-    {
-        //User has permission to delete
-    }
-    else
-     {
-       this.DeletePopup();
-     }
-  }
 
   viewPopup()
   {
-    this.dialog.open(ViewPopupComponent);
+    this.serve.viewError();
   }
 
   DeletePopup()
   {
-    this.dialog.open(DeletePopupComponent);
+    this.serve.deleteError();
   }
 }
